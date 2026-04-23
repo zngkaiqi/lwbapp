@@ -10,13 +10,13 @@ Public Sub load_data(Optional this_month As Boolean = False)
     Set ie = CreateObject("InternetExplorer.Application")
     ie.Visible = True
     
-    ' ³æ¤@µn¤J
+    ' å–®ä¸€ç™»å…¥
     attempts = 0
     Dim hWnd As Long
     Dim numLockState As Boolean
     numLockState = CBool(GetKeyState(144) And 1)
     Do While attempts < 5
-        ie.navigate "http://sso.taipower.com.tw/wps/portal/0/login/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8zi_QwNLTxMLAz83Q0tDQwCLUwCnVwN_YwNAk31wwkpiAJKG-AAjgb6BbmhigBUllSD/dz/d5/L2dBISEvZ0FBIS9nQSEh/"
+        ie.navigate "http://sso.********.com.tw/"
         Do While ie.Busy Or ie.readyState <> 4: DoEvents: Loop
         ie.Document.getElementsByName("userid")(0).Focus
         hWnd = FindWindow("IEFrame", vbNullString)
@@ -41,10 +41,10 @@ Public Sub load_data(Optional this_month As Boolean = False)
         keybd_event 144, 0, 2, 0
     End If
 
-    ' ¤H¨Æ¦æ¬FºŞ²z¨t²Î
+    ' äººäº‹è¡Œæ”¿ç®¡ç†ç³»çµ±
     Dim elem As Object
     Dim startTime As Double
-    ie.navigate "http://sso.taipower.com.tw/wps/myportal/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8zi_QwNLTxMLAz83Q0tDQwCLUwCnVwN_YwNQs30wwkpiAJKG-AAjgb6BbmhigDgayq3/dz/d5/L2dJQSEvUUt3QS80TmxFL1o2X04xMThINDgwT0cxOTAwUTg0UUJFMU4zR0kx/"
+    ie.navigate "http://sso.********.com.tw/"
     startTime = Timer
     With CreateObject("Shell.Application")
         Do While Timer - startTime < 10
@@ -60,23 +60,23 @@ Public Sub load_data(Optional this_month As Boolean = False)
         Loop
     End With
     
-    ' ®t°²ºŞ²z¨t²Î
+    ' å·®å‡ç®¡ç†ç³»çµ±
     Dim allLinks As Object
     Dim link As Object
     Set allLinks = ie.Document.getElementsByName("EItop")(0).contentWindow.Document.all
     For Each link In allLinks
-        If link.innerHTML = "®t°²ºŞ²z" Then
+        If link.innerHTML = "å·®å‡ç®¡ç†" Then
             link.Click
             Exit For
         End If
     Next link
     Do While ie.Busy Or ie.readyState <> 4: DoEvents: Loop
     
-    ' °²³æ¬d¸ß
+    ' å‡å–®æŸ¥è©¢
     ie.Document.getElementsByName("top")(0).contentWindow.Document.getElementById("Head7").Click
     Do While ie.Busy Or ie.readyState <> 4: DoEvents: Loop
         
-    ' ¤wµn¿ı°²³æ
+    ' å·²ç™»éŒ„å‡å–®
     With ie.Document.getElementsByName("bottom")(0).contentWindow.Document
         .getElementsByName("frmTools")(0).contentWindow.Document.getElementById("menu2").Click
     End With
@@ -110,9 +110,9 @@ Public Sub load_data(Optional this_month As Boolean = False)
         End With
     End With
 
-    ' ¶K¤W¸ê®Æ
-    Worksheets("®t°²¸ê®Æ").Range("A2:G51").Clear
-    Worksheets("®t°²¸ê®Æ").Range("A2").PasteSpecial
+    ' è²¼ä¸Šè³‡æ–™
+    Worksheets("å·®å‡è³‡æ–™").Range("A2:G51").Clear
+    Worksheets("å·®å‡è³‡æ–™").Range("A2").PasteSpecial
 
     With CreateObject("Shell.Application")
         For Each elem In .Windows
